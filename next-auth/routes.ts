@@ -1,0 +1,8 @@
+// does not require authentication
+export const publicRoutes = [ "/" ];
+//for authentication, will redirect logged in users to /settings
+export const authRoutes = [ "/auth/login","/auth/register"];
+// prefix for api authentication routes 
+export const apiAuthPrefix = "/api/auth"
+// the default path after logging in
+export const DEFAULT_LOGIN_REDIRECT = "/settings"
