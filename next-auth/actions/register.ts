@@ -5,6 +5,8 @@ import {db} from '@/lib/db'
 import * as z from 'zod'
 import { RegisterSchema } from '@/schemas'
 import { getUSerByEmail } from '@/data/users'
+import { generateVerificationToken } from '@/lib/tokens'
+
 export const register = async (values:z.infer<typeof RegisterSchema>)=>{
     const validatedFields = RegisterSchema.safeParse(values);
     if(!validatedFields.success){
@@ -26,6 +28,8 @@ export const register = async (values:z.infer<typeof RegisterSchema>)=>{
             name
         }
     })
+
+    const verificationToken = await generateVerificationToken(email)
 
     return {success:"User created!"}
 }
