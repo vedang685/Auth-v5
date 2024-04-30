@@ -1,5 +1,5 @@
 // does not require authentication
-export const publicRoutes = [ "/" ];
+export const publicRoutes = [ "/","/auth/new-verification"];
 //for authentication, will redirect logged in users to /settings
 export const authRoutes = [ "/auth/login","/auth/register","/auth/error"];
 // prefix for api authentication routes 
