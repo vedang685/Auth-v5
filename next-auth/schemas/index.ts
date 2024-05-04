@@ -1,5 +1,7 @@
 import * as z from 'zod'
-
+export const SettingSchema = z.object({
+    name: z.optional(z.string())
+})
 export const ResetSchema = z.object({
     email: z.string().email({
         message:"Email is required"

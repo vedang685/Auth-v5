@@ -1,10 +1,34 @@
 'use client'
+import { admin } from "@/actions/admin"
 import { RoleGate } from "@/components/auth/role-gate"
 import { FormSuccess } from "@/components/form-success"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { UserRole } from "@prisma/client"
+import { toast } from "sonner"
 const AdminPage = ()=>{
+    const onServerClick = () =>{
+        admin()
+        .then((data)=>{
+            if(data.success){
+                toast.success(data.success)
+            }
+            else{
+                toast.error(data.error)
+            }
+        })
+    }
+    const onApiRouteClick = () => {
+        fetch("/api/admin")
+            .then((response)=>{
+                if(response.ok){
+                    toast.success("Allowed API route!")
+                }
+                else{
+                    toast.error("Forbidden API route!")
+                }
+            })
+    }
     return(
         <Card className="w-[600px]">
             <CardHeader>
@@ -20,7 +44,7 @@ const AdminPage = ()=>{
                     <p className="text-sm font-medium">
                         Admin-only API route
                     </p>
-                    <Button>
+                    <Button onClick={onApiRouteClick}>
                         Click to test
                     </Button>
                 </div>
@@ -28,7 +52,7 @@ const AdminPage = ()=>{
                     <p className="text-sm font-medium">
                         Admin-only Server Action
                     </p>
-                    <Button>
+                    <Button onClick = {onServerClick}>
                         Click to test
                     </Button>
                 </div>
