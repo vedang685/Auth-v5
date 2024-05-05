@@ -12,6 +12,7 @@ import { generateTwoFactorToken} from '@/lib/tokens'
 import { getTwoFactorTokenByEmail } from '@/data/two-factor-token'
 import { db } from '@/lib/db'
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation'
+import { getAccountByUserId } from '@/data/getAccountByUserId'
 
 export const login = async (values:z.infer<typeof LoginSchema>)=>{
     const validatedFields = LoginSchema.safeParse(values);
@@ -20,9 +21,17 @@ export const login = async (values:z.infer<typeof LoginSchema>)=>{
     }
     const {email, password, code} = validatedFields.data
     const existingUser = await getUSerByEmail(email)
+    if(existingUser){
+        const isOAuth = await getAccountByUserId(existingUser.id)
+        if(isOAuth){
+            return {error:"Email Already in use!"}
+        }
+    }
     if(!existingUser || !existingUser.email || !existingUser.password){
         return {error: "Email does not exist!"}
     }
+
+
     if(!existingUser.emailVerified){
         const verificationToken  = await generateVerificationToken(existingUser.email)
         
