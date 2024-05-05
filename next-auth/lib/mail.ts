@@ -1,29 +1,63 @@
-import {Resend} from 'resend'
+"use server"
+import nodemailer, { SentMessageInfo } from 'nodemailer';
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: "smtp.gmail.email",
+    port: 465,
+    secure: true, 
+    auth: {
+      user: process.env.NEXT_PUBLIC_USER,
+      pass: process.env.NEXT_PUBLIC_APP_PASS
+    }
+  });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export const sendTwoFactorTokenEmail = async(
+export const sendTwoFactorTokenEmail = (
     email: string,
     token: string
 )=>{
-    await resend.emails.send({
-        from:'onboarding@resend.dev',
+    const mailOptions = {
+        from:{
+         name: 'Vedang Codes',
+         address:'vedang.codes@gmail.com'
+        },
         to: email,
-        subject: "Two factor authentication code",
-        html: `<p>Your 2FA code: ${token} </p>`
-    })
+        subject: 'Two factor authentication code',
+        text: 'Two factor authentication code!',
+        html: `<p>Your 2FA code: <b>${token}</b></p>`
+      };
+
+      transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
+    
 }
 export const sendPasswordResetEmail = async(
     email:string,
     token: string
 )=>{
     const resetLink = `http://localhost:3000/auth/new-password?token=${token}`
-    await resend.emails.send({
-        from:'onboarding@resend.dev',
+    const mailOptions = {
+        from:{
+         name: 'Vedang Codes',
+         address:'vedang.codes@gmail.com'
+        },
         to: email,
-        subject: "Reset your password",
-        html: `<p>Click <a href ="${resetLink}">here</a> to confirm email.</p>`
-    })
+        subject: 'Reset Link',
+        text: 'Reset Link',
+        html: `<p>Click <a href=${resetLink}> here</a> to reset link </p>`
+      };
+
+      transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
 }
 
 export const sendVerificationEmail = async(
@@ -31,10 +65,23 @@ export const sendVerificationEmail = async(
     token: string
 )=>{
     const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`
-    await resend.emails.send({
-        from:'onboarding@resend.dev',
+    
+    const mailOptions = {
+        from:{
+         name: 'Vedang Codes',
+         address:'vedang.codes@gmail.com'
+        },
         to: email,
-        subject: "Confirm your email",
-        html: `<p>Click <a href ="${confirmLink}">here</a> to confirm email.</p>`
-    })
+        subject: 'Email confirmation Link',
+        text: 'Reset Link',
+        html: `<p> Click <a href=${confirmLink}> here</a> to confirm email.</p>`
+      };
+
+      transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
 }
