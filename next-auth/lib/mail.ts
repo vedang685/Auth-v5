@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
       pass: process.env.NEXT_PUBLIC_APP_PASS
     }
   });
-
+const domain = process.env.NEXT_PUBLIC_DOMAIN
 export const sendTwoFactorTokenEmail = (
     email: string,
     token: string
@@ -39,7 +39,7 @@ export const sendPasswordResetEmail = async(
     email:string,
     token: string
 )=>{
-    const resetLink = `http://localhost:3000/auth/new-password?token=${token}`
+    const resetLink = `${domain}/auth/new-password?token=${token}`
     const mailOptions = {
         from:{
          name: 'Vedang Codes',
@@ -64,7 +64,7 @@ export const sendVerificationEmail = async(
     email:string,
     token: string
 )=>{
-    const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`
+    const confirmLink = `${domain}/auth/new-verification?token=${token}`
     
     const mailOptions = {
         from:{
