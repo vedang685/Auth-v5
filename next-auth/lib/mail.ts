@@ -64,7 +64,7 @@ export const sendPasswordResetEmail = (
       });
 }
 
-export const sendVerificationEmail = (
+export const sendVerificationEmail = async(
     email:string,
     token: string
 )=>{
@@ -81,7 +81,7 @@ export const sendVerificationEmail = (
         html: `<p> Click <a href=${confirmLink}> here</a> to confirm email.</p>`
       };
 
-      transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo) => {
+      await transporter.sendMail(mailOptions, (error: Error | null, info: SentMessageInfo) => {
         if (error) {
           console.error('Error sending email:', error);
         } else {
