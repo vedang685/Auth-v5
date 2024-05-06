@@ -9,10 +9,6 @@ const transporter = nodemailer.createTransport({
       user: process.env.NEXT_PUBLIC_USER,
       pass: process.env.NEXT_PUBLIC_APP_PASS
     },
-    tls: {
-      rejectUnauthorized: false,
-      ciphers: 'DEFAULT@SECLEVEL=0'
-    }
   });
 const domain = process.env.NEXT_PUBLIC_DOMAIN
 export const sendTwoFactorTokenEmail = (
