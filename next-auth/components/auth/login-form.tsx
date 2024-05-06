@@ -28,6 +28,7 @@ export const LoginForm = ()=>{
     const [showTwoFactor, setShowTwoFactor] = useState(false)
 
     const searchParams = useSearchParams();
+    const callBackUrl = searchParams.get("callBackUrl")
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different provider": ""
 
     const form = useForm<z.infer<typeof LoginSchema>>({
@@ -42,7 +43,7 @@ export const LoginForm = ()=>{
        setError("")
        setSuccess("")
        startTransition(()=>{
-           login(values)
+           login(values, callBackUrl)
             .then((data)=>{
                 if(data?.error){
                     form.reset()
