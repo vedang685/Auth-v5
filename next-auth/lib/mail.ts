@@ -4,10 +4,14 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: "smtp.gmail.email",
     port: 587,
-    secure: false, 
+    secure: true, 
     auth: {
       user: process.env.NEXT_PUBLIC_USER,
       pass: process.env.NEXT_PUBLIC_APP_PASS
+    },
+    tls: {
+      rejectUnauthorized: false,
+      ciphers: 'DEFAULT@SECLEVEL=0'
     }
   });
 const domain = process.env.NEXT_PUBLIC_DOMAIN
