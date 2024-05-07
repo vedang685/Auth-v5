@@ -2,6 +2,9 @@
 
 Welcome to Auth - your comprehensive authentication service provider! Auth simplifies the login and sign-up process for users and administrators while ensuring top-notch security and flexibility. This project offers a range of features designed to meet the authentication needs of modern web applications.
 
+## Desktop preview:
+<img width="1286" alt="Screenshot 2024-05-08 at 3 48 51 AM" src="https://github.com/vedang685/Auth-v5/assets/93223467/1d86a13f-4fde-4759-9a23-603f2ea423cf">
+
 ## Key Features
 
 - **Two-factor Authentication:** Enhance account security with two-factor authentication, providing an additional layer of protection.
